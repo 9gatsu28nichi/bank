@@ -17,5 +17,7 @@ public abstract class BankAccount {
     protected synchronized void updateBalance(double amount) {
         this.balance += amount;
     }
+
+    public abstract void calculateInterest();
 }
 
