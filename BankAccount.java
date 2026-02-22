@@ -10,11 +10,11 @@ public abstract class BankAccount {
         this.balance = balance;
     }
 
-    public double getBalance() {
+    public synchronized double getBalance() {
         return balance;
     }
 
-    protected void updateBalance(double amount) {
+    protected synchronized void updateBalance(double amount) {
         this.balance += amount;
     }
 }
