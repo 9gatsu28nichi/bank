@@ -9,8 +9,4 @@ public class BasicAccount extends BankAccount {
         double interest = this.balance * interestRate;
         this.balance += interest;
     }
-
-    public synchronized void updateBalance(double amount){
-        this.balance += amount;
-    }
 }
