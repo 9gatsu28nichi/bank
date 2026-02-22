@@ -1,9 +1,12 @@
+import java.util.Scanner;
+
 public class TestBank {
     public static void main(String[] args) {
         BankAccount a1 = new BasicAccount("001", "Alice", 1000);
         BankAccount a2 = new BasicAccount("002", "Bob", 500);
 
         BankService bank = new CoreBankSystem();
+        StressTest stackOverflowCauser = new StressTest();
 
         Thread t1 = new Thread(() -> bank.deposit(a1, 200));
         Thread t2 = new Thread(() -> bank.withdraw(a2, 50));
@@ -26,5 +29,20 @@ public class TestBank {
 
         System.out.println("Final balance of Alice: " + a1.getBalance());
         System.out.println("Final balance of Bob: " + a2.getBalance());
+        System.out.println("Simulate the stack overflow?: 1 for yes, 0 for no");
+        Scanner inp = new Scanner(System.in);
+        int choice = inp.nextInt();
+        if (choice == 1) {
+            System.out.println("Triggering Stack Overflow");
+            Thread crashThread = new Thread(() -> {
+                try {
+                    stackOverflowCauser.simulateStackOverflow(1);
+                } catch (StackOverflowError e) {
+                    System.err.println("Stack space exhaust");
+                }
+            });
+            crashThread.start();
+        }
+        inp.close();
     }
 }
